@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 	}
 	else if( argc == 3)
 	{
-		// Example ./ProtonSimulation run.mac output.root
+		// Example ./Simulation run.mac output.root
 		outputFileName = argv[1];
 		macroFileName  = argv[2];
 	}
@@ -89,7 +89,9 @@ int main(int argc, char** argv)
 		// batch mode
 		UImanager->ApplyCommand(command+macroFileName);
 	}
+
 	DataManager::getInstance()->finish();
+
 	// job termination
 	delete visManager;
 	delete runManager;
