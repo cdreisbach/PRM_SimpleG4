@@ -1,0 +1,17 @@
+# Set some default verbose
+/control/verbose 2
+/control/saveHistory
+/run/verbose 2
+
+# TPC Settings
+/simulation/TPC/setPressure 20
+/simulation/TPC/setPadPlaneId 10
+/simulation/TPC/setPositionZ -988 mm
+
+# Initialize kernel
+/run/initialize
+#
+
+# Visualization setting
+/control/macroPath ../../simulation/macro/
+/control/execute vis.mac
