@@ -4,6 +4,7 @@
 #include <TTree.h>
 #include <TFile.h>
 #include <TH1D.h>
+#include <TH2D.h>
 
 #include <G4Step.hh>
 #include <G4Track.hh>
@@ -20,7 +21,7 @@ DataManager * DataManager::getInstance()
 	return _instance;
 }
 
-DataManager::DataManager() {}
+DataManager::DataManager() : _dataVisualisation(DataVisualisation::getInstance()) {}
 
 DataManager::~DataManager() {}
 
@@ -151,6 +152,9 @@ void DataManager::addStep(const G4Step* step)
 	this->_stepKineticEnergy   ->push_back( step->GetPostStepPoint()->GetKineticEnergy()        / CLHEP::MeV );
 	this->_stepEnergyDeposition->push_back( step->GetTotalEnergyDeposit()                       / CLHEP::MeV );
 	this->_stepPid             ->push_back( step->GetTrack()->GetDefinition()->GetPDGEncoding()              );
+
+	// Histograms
+	this->_histogramStepXY->Fill( this->_stepPositionX->back() , this->_stepPositionY->back() );
 }
 
 void DataManager::addTrack( const G4Track* track)
@@ -177,7 +181,10 @@ void DataManager::addTrack( const G4Track* track)
 	}
 }
 
-void DataManager::createHistograms() {}
+void DataManager::createHistograms()
+{
+	this->_histogramStepXY = (TH2D*)this->_dataVisualisation->createHistogram( new TH2D("histogramStepXY", "", 300, -300, 300, 300, -300, 300));
+}
 
 /**
  * Prepare tree, histograms and initial clean of vectors

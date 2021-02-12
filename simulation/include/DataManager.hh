@@ -6,8 +6,10 @@
 
 class TTree;
 class TFile;
+class TH2D;
 class G4Step;
 class G4Track;
+class DataVisualisation;
 class DataManager
 {
 	public:
@@ -35,6 +37,8 @@ class DataManager
 		void createHistograms();
 		bool _prepared = false;
 		unsigned int _evNr = 0;
+
+		DataVisualisation* _dataVisualisation;
 
 		TTree*      _treeSteps;
 		TTree*      _treeTracks;
@@ -68,6 +72,7 @@ class DataManager
 		std::vector<double>*      _trackPid              = nullptr;
 		std::vector<std::string>* _trackCreatorProcess   = nullptr;
 
+		TH2D* _histogramStepXY;
 };
 
 #endif
